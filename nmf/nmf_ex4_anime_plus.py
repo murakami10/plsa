@@ -35,7 +35,7 @@ Y = np.array(Y)
 Y = Y.T
 print(Y.shape)
 Y = Y.reshape(12288, -1)
-nmf2 = NMF(n_components=64)
+nmf2 = NMF(n_components=90)
 W = nmf2.fit_transform(Y) # 学習
 H = nmf2.components_
 

@@ -64,11 +64,12 @@ plt.show()
 
 ############################################転置したやつ
 # 分解数
-n_components = 4
+n_components = 9
 #n_components = 10
 
 #https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.NMF.html 
 #initで初期値の設定方法を指定できます(今回はランダム) よくわからん
+#random_stateはinit=randomのときのseed値(0とかにすると結果が固定される)
 model = NMF(n_components=n_components, init='random', random_state=0) # n_componentsで特徴の次元を指定
 
 W = model.fit_transform(x_train_T) # 学習
@@ -85,7 +86,7 @@ fig = plt.figure(figsize=(8, 8)) #画像の大きさ(横幅、縦幅)
 for i in range(0, n_components):
     #figure内の枠の大きさとどこに配置している。subplot(行の数,列の数,何番目に配置しているか)
     ax = fig.add_subplot(1, n_components, i+1)
-    ax.imshow(W_image[i])
+    ax.imshow(W_image[i], cmap='Greys')
 
 plt.show()
 
