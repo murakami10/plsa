@@ -13,14 +13,21 @@ from keras.datasets import mnist
 #print(x_train.shape)
 # (60000, 28, 28) 60000 * 28 * 28のデータ
 
+'''
 #画像を表示
 #https://weblabo.oscasierra.net/python/keras-mnist-sample.html
-#for i in range(0,1):
-#    print("ラベル", train_labels[i])
-#    # reshape(28, 28) 28 * 28の行列に変換する https://note.nkmk.me/python-numpy-reshape-usage/
-#    # cmap https://beiznotes.org/matplot-cmap-list/
-#    plt.imshow(x_train[i].reshape(28, 28), cmap='Blues')
-#    plt.show()
+for i in range(0,3):
+    print("ラベル", train_labels[i])
+    # reshape(28, 28) 28 * 28の行列に変換する https://note.nkmk.me/python-numpy-reshape-usage/
+    # cmap https://beiznotes.org/matplot-cmap-list/
+    print(x_train.shape)
+    plt.imshow(x_train[i].reshape(28, 28), cmap='Greys')
+    plt.show()
+
+'''
+
+
+#'''
 
 x_train = x_train.reshape(-1, 784) # 2次元配列を1次元に変換 
 #reshape(-1, x)にすると 列はxになり、行は残りから推測される https://qiita.com/yosshi4486/items/deb49d5a433a2c8a8ed4
@@ -39,6 +46,12 @@ x_train /= 255                        # [0-255]の値を[0.0-1.0]に変換
 print(x_train.shape[0], 'train samples') #(60000, 784)
 x_train_T = x_train.T #転置する
 #print(x_train_T.shape) #np.shape はプロパティ
+
+#'''
+
+
+
+
 
 ######################################そのまま
 '''
@@ -63,9 +76,11 @@ plt.show()
 '''
 
 ############################################転置したやつ
+
+
+#'''
 # 分解数
-n_components = 9
-#n_components = 10
+n_components = 30
 
 #https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.NMF.html 
 #initで初期値の設定方法を指定できます(今回はランダム) よくわからん
@@ -81,12 +96,24 @@ H = model.components_
 # 28x28の画像に変換
 W_image = W.T.reshape(n_components,28, 28)
 
+'''
 # 画像の表示
-fig = plt.figure(figsize=(8, 8)) #画像の大きさ(横幅、縦幅)
-for i in range(0, n_components):
+#fig = plt.figure(figsize=(8, 8)) #画像の大きさ(横幅、縦幅)
+fig, axes = plt.subplots(2,5,figsize=(10,10))
+for i, ax in enumerate(axes.ravel()):
     #figure内の枠の大きさとどこに配置している。subplot(行の数,列の数,何番目に配置しているか)
-    ax = fig.add_subplot(1, n_components, i+1)
+    #ax = fig.add_subplot(1, n_components, i+1)
+    #ax.imshow(W_image[i], cmap='Greys')
     ax.imshow(W_image[i], cmap='Greys')
 
 plt.show()
+'''
+first = np.dot(W, H)
+first_image = first.T.reshape(60000, 28, 28)
 
+fig, axes = plt.subplots(1,3, figsize=(10, 10))
+for i, ax in enumerate(axes.ravel()):
+    ax.imshow(first_image[i], cmap="Greys")
+plt.show()
+
+#'''

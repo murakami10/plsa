@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from sklearn.decomposition import NMF
 import copy
 
-sample_num = 100
+sample_num = 1000
 
 
 X = []
