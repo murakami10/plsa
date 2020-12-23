@@ -20,6 +20,7 @@ class PLSA:
         self.Px_z = self.Px_z / np.sum(self.Px_z, axis=1)[:, None]
         self.Py_z = self.Py_z / np.sum(self.Py_z, axis=1)[:, None]
 
+        '''
         print()
         print('Pz')
         print(self.Pz)
@@ -28,6 +29,7 @@ class PLSA:
         print('Py')
         print(self.Py_z)
         print()
+        '''
 
     def train(self, k=200, t=1.0e-7):
         '''
@@ -37,12 +39,12 @@ class PLSA:
         for i in range(k):
             self.e_step()
             self.m_step()
-            llh = self.llh()
+            #llh = self.llh()
 
-            if abs((llh - prev_llh) / prev_llh) < t:
-                break
+            #if abs((llh - prev_llh) / prev_llh) < t:
+            #    break
 
-            prev_llh = llh
+            #prev_llh = llh
 
     def e_step(self):
         # ここのNoneは新しい次元を追加する https://note.nkmk.me/python-numpy-newaxis/
