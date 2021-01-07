@@ -43,10 +43,10 @@ for i in range(90):
     p = c.make_p(document_size)
     p = zentai(p)
 
-    PLSA_SIZE = 10
+    PLSA_SIZE = 15
     TRAIN_NUM = 100000
 
-    plsa = PLSA(p, 10)
+    plsa = PLSA(p, PLSA_SIZE)
     plsa.train(TRAIN_NUM)
 
     path = os.getcwd() + "/data/pw_z/" + "d" + str(len(ganma)) + "w" + str(len(beta)) + "z" + str(len(alpha)) + "plsaz" + str(PLSA_SIZE) + ".txt"
@@ -57,7 +57,7 @@ for i in range(90):
         f.write(" ".join(px_z))
         f.write("\n\n")
 
-    path = os.getcwd() + "/data/pd_z/" + "d" + str(len(ganma)) + "w" + str(len(beta)) + "z" + str(len(alpha)) + ".txt"
+    path = os.getcwd() + "/data/pd_z/" + "d" + str(len(ganma)) + "w" + str(len(beta)) + "z" + str(len(alpha)) + "plsaz" + str(PLSA_SIZE) + ".txt"
     py_z = process_result(plsa.Py_z)
     print(py_z.shape)
     py_z = list(map(str, py_z))
@@ -65,7 +65,7 @@ for i in range(90):
         f.write(" ".join(py_z))
         f.write("\n\n")
 
-    path = os.getcwd() + "/data/pz/" + "d" + str(len(ganma)) + "w" + str(len(beta)) + "z" + str(len(alpha)) + ".txt"
+    path = os.getcwd() + "/data/pz/" + "d" + str(len(ganma)) + "w" + str(len(beta)) + "z" + str(len(alpha)) + "plsaz" + str(PLSA_SIZE) +".txt"
     pz = plsa.Pz
     print(pz.shape)
     pz = list(map(str, pz))
