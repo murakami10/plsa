@@ -1,0 +1,2 @@
+卒業研究で利用するPLSA関係のコードをPythonで実装したものです。
+PLSAはplsa/used/plsa.pyで実装されています。
