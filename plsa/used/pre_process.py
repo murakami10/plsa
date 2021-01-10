@@ -14,3 +14,6 @@ def kl_diver(A: np.ndarray, B: np.ndarray) -> float:
     print(aab.sum())
     '''
     return pre - later
+
+def process_result(array: np.ndarray) -> np.ndarray:
+    return array.sum(axis=0)/array.shape[0]

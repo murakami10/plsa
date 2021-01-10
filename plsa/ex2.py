@@ -1,5 +1,5 @@
 
-from used.plsa import PLSA
+from used.Plsa import Plsa
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
@@ -39,7 +39,7 @@ print(X_nmf.shape, nmf.components_.shape)
 Y = np.array(Y)
 Y = Y.T
 Y = Y.reshape(4096, -1)
-plsa = PLSA(Y, 20)
+plsa = Plsa(Y, 20)
 plsa.train()
 z = plsa.Pz
 x = plsa.Px_z

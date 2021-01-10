@@ -2,7 +2,7 @@ import numpy as np
 from typing import List
 import sys, os
 sys.path.append('../')
-from used.plsa import PLSA
+from used.Plsa import Plsa
 from used.pre_process import zentai, kl_diver, process_result
 
 class CreatP:
@@ -60,46 +60,12 @@ if __name__ == '__main__':
 
     p = zentai(p)
     # print(p)
-    plsa = PLSA(p, plsa_z)
+    plsa = Plsa(p, plsa_z)
     plsa.train(1000)
 
     print(plsa.Py_z)
     py_z = process_result(plsa.Py_z)
     print(py_z)
-    """
-    path = os.getcwd() + "/data/pw_z/" + "d" + str(len(ganma)) + "w" + str(len(beta)) + "z" + str(len(alpha)) + ".txt"
-    px_z = process_result(plsa.Px_z)
-    px_z = list(map(str, px_z))
-    with open(path, mode="w") as f:
-        f.write(" ".join(px_z))
-        f.write("\n\n")
-
-
-    path = os.getcwd() + "/data/pd_z/" + "d" + str(len(ganma)) + "w" + str(len(beta)) + "z" + str(len(alpha)) + ".txt"
-    py_z = process_result(plsa.Py_z)
-    print(py_z)
-    py_z = list(map(str, py_z))
-    with open(path, mode="w") as f:
-        f.write(" ".join(py_z))
-        f.write("\n\n")
-
-    path = os.getcwd() + "/data/pz/" + "d" + str(len(ganma)) + "w" + str(len(beta)) + "z" + str(len(alpha)) + ".txt"
-    pz = plsa.Pz
-    print(pz)
-    pz = list(map(str, pz))
-    with open(path, mode="w") as f:
-        f.write(" ".join(pz))
-        f.write("\n\n")
-    """
-
-
-    # print(beta/sum(beta))
-    # print(process_beta(plsa.Px_z))
-    # print(plsa.Px_z)
-    # print(process_result(plsa.Px_z))
-    # print(plsa.Py_z)
-    # print(process_result(plsa.Py_z))
-
 
     #after_p = np.dot(np.dot(plsa.Px_z.T, np.diag(plsa.Pz)), plsa.Py_z)
     #print(after_p)

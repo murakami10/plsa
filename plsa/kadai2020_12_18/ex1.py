@@ -1,7 +1,7 @@
 import sys
 import numpy as np
 sys.path.append('../')
-from used.plsa import PLSA
+from used.Plsa import Plsa
 from used.pre_process import zentai
 
 
@@ -17,7 +17,7 @@ N = zentai(N)
 print(N)
 
 np.random.seed(seed=10)
-plsa = PLSA(N, 2)
+plsa = Plsa(N, 2)
 plsa.train(k=100)
 
 print('P(z)')

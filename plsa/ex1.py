@@ -1,5 +1,5 @@
 import numpy as np
-from used.plsa import PLSA
+from used.Plsa import Plsa
 
 
 N = np.array([
@@ -10,7 +10,7 @@ N = np.array([
     [1, 0, 18, 24]
 ])
 
-plsa = PLSA(N, 2)
+plsa = Plsa(N, 2)
 plsa.train(k=1)
 
 '''

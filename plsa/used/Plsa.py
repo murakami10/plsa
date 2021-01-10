@@ -1,6 +1,6 @@
 import numpy as np
 
-class PLSA:
+class Plsa:
 
     def __init__(self, N, Z):
         self.N = N

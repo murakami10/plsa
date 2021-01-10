@@ -3,7 +3,7 @@ import os
 import creat_p
 import sys
 sys.path.append('../')
-from used.plsa import PLSA
+from used.Plsa import Plsa
 from used.pre_process import zentai, kl_diver, process_result
 
 path = os.getcwd() + "/parameter.txt"
@@ -46,7 +46,7 @@ for i in range(90):
     PLSA_SIZE = 15
     TRAIN_NUM = 100000
 
-    plsa = PLSA(p, PLSA_SIZE)
+    plsa = Plsa(p, PLSA_SIZE)
     plsa.train(TRAIN_NUM)
 
     path = os.getcwd() + "/data/pw_z/" + "d" + str(len(ganma)) + "w" + str(len(beta)) + "z" + str(len(alpha)) + "plsaz" + str(PLSA_SIZE) + ".txt"
