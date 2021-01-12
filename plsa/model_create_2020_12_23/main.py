@@ -1,10 +1,10 @@
 import numpy as np
 import os
-import creat_p
+from used import CreatP
 import sys
 sys.path.append('../')
 from used.Plsa import Plsa
-from used.pre_process import zentai, kl_diver, process_result
+from used.pre_process import zentai, process_result
 
 path = os.getcwd() + "/parameter.txt"
 
@@ -39,7 +39,7 @@ for i in range(90):
     print(i+1, "回目")
     document_size = len(ganma)
 
-    c = creat_p.CreatP(alpha, beta, ganma)
+    c = CreatP.CreatP(alpha, beta, ganma)
     p = c.make_p(document_size)
     p = zentai(p)
 

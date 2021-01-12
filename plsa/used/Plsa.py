@@ -2,7 +2,7 @@ import numpy as np
 
 class Plsa:
 
-    def __init__(self, N, Z):
+    def __init__(self, N: np.ndarray, Z: int):
         self.N = N
         self.X = N.shape[0]
         self.Y = N.shape[1]
@@ -31,7 +31,7 @@ class Plsa:
         print()
         '''
 
-    def train(self, k=200, t=1.0e-7):
+    def train(self, k: int = 200, t=1.0e-7):
         '''
         対数尤度が収束するまでEステMステを繰り返す(最大でk回)
         '''
