@@ -31,20 +31,13 @@ class Plsa:
         print()
         '''
 
-    def train(self, k: int = 200, t=1.0e-7):
+    def train(self, k: int = 200):
         '''
-        対数尤度が収束するまでEステMステを繰り返す(最大でk回)
+        EMステップをk回繰り返す
         '''
-        prev_llh = 100000
         for i in range(k):
             self.e_step()
             self.m_step()
-            #llh = self.llh()
-
-            #if abs((llh - prev_llh) / prev_llh) < t:
-            #    break
-
-            #prev_llh = llh
 
     def e_step(self):
         # ここのNoneは新しい次元を追加する https://note.nkmk.me/python-numpy-newaxis/
@@ -67,7 +60,6 @@ class Plsa:
 
         NP = self.N[:, :, None] * self.Pz_xy
         #print(self.Pz_xy)
-        #print('################')
         #print(NP)
 
         #print(NP)
@@ -81,14 +73,11 @@ class Plsa:
         self.Px_z /= np.sum(self.Px_z, axis=1)[:, None]
         self.Py_z /= np.sum(self.Py_z, axis=1)[:, None]
 
-    def llh(self):
-        '''
-        対数尤度
-        '''
-        Pxy = self.Pz[None, None, :] \
-            * self.Px_z.T[:, None, :] \
-            * self.Py_z.T[None, :, :]
-        Pxy = np.sum(Pxy, axis=2)
-        Pxy /= np.sum(Pxy)
 
-        return np.sum(self.N * np.log(Pxy))
+    def sort_pz_px_py(self):
+        # pzを小さい順に並べ、その並べ順にPx_z Py_zも並べる
+
+        index_sort = np.argsort(self.Pz)
+        self.Pz = self.Pz[index_sort]
+        self.Px_z = self.Px_z[index_sort, :]
+        self.Py_z = self.Py_z[index_sort, :]
