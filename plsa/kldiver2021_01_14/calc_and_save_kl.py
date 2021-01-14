@@ -12,7 +12,8 @@ if __name__ == '__main__':
     """
     pz pd_z pw_z を取得
     """
-    plsa_z_size = 5
+    plsa_z_size = 15
+    print("plsa_z_size" + str(plsa_z_size))
 
     save_path_pz: str = os.getcwd() + "/data/pz/estimated_pz_z" + str(plsa_z_size) + ".txt"
     try:

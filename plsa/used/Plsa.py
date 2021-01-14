@@ -35,6 +35,9 @@ class Plsa:
         '''
         EMステップをk回繰り返す
         '''
+        self.prePz = self.Pz
+        self.prePx_z = self.Px_z
+        self.prePy_z = self.Py_z
         for i in range(k):
             self.e_step()
             self.m_step()

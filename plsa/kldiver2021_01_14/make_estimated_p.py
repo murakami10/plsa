@@ -11,7 +11,7 @@ from used.Plsa import Plsa
 if __name__ == "__main__":
 
     # plsaにおけるトピックの数
-    plsa_z_size = 10
+    plsa_z_size = 7
     # plsaにおけるemステップの回数
     plsa_train_num = 100000
     # 作成するplsaの数
@@ -57,11 +57,11 @@ if __name__ == "__main__":
     '''
     save_path_pz: str = os.getcwd() + "/data/pz/estimated_pz_z" + str(plsa_z_size) + ".txt"
     tmp_pz_str: List[str] = list(map(str, tmp_pz))
-    with open(save_path_pz, mode="w") as f:
+    with open(save_path_pz, mode="x") as f:
         f.write(' '.join(tmp_pz_str))
 
     save_path_pw: str = os.getcwd() + "/data/pw/estimated_pw_z" + str(plsa_z_size) + ".txt"
-    with open(save_path_pw, mode="w") as f:
+    with open(save_path_pw, mode="x") as f:
         for tmp in tmp_pw:
             tmp_pw_str: List[str] = list(map(str, tmp))
             f.write(' '.join(tmp_pw_str))
@@ -69,7 +69,7 @@ if __name__ == "__main__":
         f.write('end')
 
     save_path_pd: str = os.getcwd() + "/data/pd/estimated_pd_z" + str(plsa_z_size) + ".txt"
-    with open(save_path_pd, mode="w") as f:
+    with open(save_path_pd, mode="x") as f:
         for tmp in tmp_pd:
             tmp_pd_str: List[str] = list(map(str, tmp))
             f.write(' '.join(tmp_pd_str))
