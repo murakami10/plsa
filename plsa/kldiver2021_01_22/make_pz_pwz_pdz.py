@@ -1,7 +1,7 @@
 import numpy as np
 import os
 
-path = os.getcwd() + "/parameter.txt"
+path = os.getcwd() + "/parameter_with_various_beta.txt"
 
 # 理論値のpz pd_z pw_zを計算する
 
@@ -30,7 +30,7 @@ try:
 
     pz = alpha/sum(alpha)
     pz = list(map(str, pz))
-    with open(path, mode='x') as f:
+    with open(path, mode='a') as f:
         f.write("pz \n")
         f.write(" ".join(pz))
         f.write("\n\n")
