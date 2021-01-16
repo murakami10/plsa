@@ -14,8 +14,13 @@ try:
                 alpha = np.array(alpha)
 
             if line == "beta":
-                beta = list(map(float, (f.readline()).split()))
-                beta = np.array(beta)
+                beta = []
+                while True:
+                    line = (f.readline()).strip()
+                    if line == "end":
+                        break
+                    beta.append(list(map(float, line.split())))
+                beta: np.ndarray = np.array(beta)
 
             if line == "ganma":
                 ganma = list(map(float, (f.readline()).split()))
@@ -35,12 +40,14 @@ try:
         f.write(" ".join(pz))
         f.write("\n\n")
 
-    pw_z = beta/sum(beta)
-    pw_z = list(map(str, pw_z))
     with open(path, mode="a") as f:
         f.write("pw_z \n")
-        f.write(" ".join(pw_z))
-        f.write("\n\n")
+        for bet in beta:
+            pw_z = bet/sum(bet)
+            pw_z = list(map(str, pw_z))
+            f.write(" ".join(pw_z))
+            f.write("\n")
+        f.write("\n")
 
     pd_z = ganma/sum(ganma)
     pd_z = list(map(str, pd_z))

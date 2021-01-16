@@ -61,7 +61,7 @@ if __name__ == '__main__':
     """
 
     # alpha beta gannmaを取得
-    path = os.getcwd() + "/parameter_pd.txt"
+    path = os.getcwd() + "/parameter_pd_with_various_beta.txt"
     p = CreatePWithParameter(path)
 
     # p(w, d)を作成する回数

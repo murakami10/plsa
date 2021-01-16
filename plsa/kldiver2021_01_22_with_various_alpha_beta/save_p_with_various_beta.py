@@ -7,14 +7,19 @@ from used.CreatP import CreatP
 
 if __name__ == "__main__":
 
-    path = os.getcwd() + "/parameter_with_various_beta.txt"
+    path = os.getcwd() + "/parameter_with_various_alpha_beta.txt"
     try:
         with open(path) as f:
             while True:
                 line = (f.readline()).strip()
                 if line == "alpha":
-                    alpha = list(map(float, (f.readline()).split()))
-                    alpha = np.array(alpha)
+                    alpha: List[List[float]] = []
+                    while True:
+                        line = (f.readline()).strip()
+                        if line == "end":
+                            break
+                        alpha.append(list(map(float, line.split())))
+                    alpha: np.ndarray = np.array(alpha)
 
                 if line == "beta":
                     beta: List[List[float]] = []
@@ -36,12 +41,12 @@ if __name__ == "__main__":
     # ディリクレ分布はわかったが乱数の生成法はわからない
     Pd = np.random.dirichlet(ganma)  # diricle(gamnma) d_size
     w_size = beta.shape[1]
-    z_size = len(alpha)
+    z_size = alpha.shape[1]
 
     # Pz_d P(z|d)
     tmp_ls = []
-    for _ in range(len(ganma)):
-        tmp_dir = np.random.dirichlet(alpha)  # diricle(alpha) z
+    for i in range(len(ganma)):
+        tmp_dir = np.random.dirichlet(alpha[i])  # diricle(alpha) z
         tmp_ls.append(tmp_dir)
 
     Pz_d = np.array(tmp_ls)
@@ -61,7 +66,7 @@ if __name__ == "__main__":
 
     path = os.getcwd() + "/parameter_pd_with_various_beta.txt"
     try:
-        with open(path, mode="w") as f:
+        with open(path, mode="x") as f:
             f.write('pd \n')
             pd: List[int] = list(map(str, list(Pd)))
             f.write(' '.join(pd))
