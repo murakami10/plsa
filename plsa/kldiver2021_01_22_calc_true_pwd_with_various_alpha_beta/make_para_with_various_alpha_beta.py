@@ -44,10 +44,8 @@ try:
     ganma_len = 50
     divide = 10
     # ganma
-    ganma = np.random.rand(ganma_len)
-    ganma *= 3
-    for i in range(ganma_len):
-        ganma[i] += 10*(i//(ganma_len//divide))
+    ganma = np.ones(ganma_len)
+    ganma *= 20
     ganma = list(map(str, ganma))
     with open(path, mode="a") as f:
         f.write("ganma \n")

@@ -64,7 +64,7 @@ if __name__ == "__main__":
     print()
     print(phi.shape)
 
-    path = os.getcwd() + "/parameter_pd_with_various_beta.txt"
+    path = os.getcwd() + "/parameter_pd_with_various_alpha_beta.txt"
     try:
         with open(path, mode="x") as f:
             f.write('pd \n')
