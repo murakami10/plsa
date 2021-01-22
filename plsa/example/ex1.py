@@ -49,6 +49,7 @@ print('P(z|y)')
 Pz_y = plsa.Py_z.T * plsa.Pz[None, :]
 print(Pz_y / np.sum(Pz_y, axis=1)[:, None])
 '''
+'''
 N = np.array([
     [1.0, 1.0, 1.0, 1.0],
     [1.0, 1.0, 1.0, 1.0],
@@ -69,3 +70,12 @@ N1 = np.array([
 N1 /= np.sum(N1)
 
 print(kl_diver(N, N1))
+'''
+N = np.array([
+    [1.0, 0.0, 1.0, 1.0],
+    [1.0, 1.0, 1.0, 1.0],
+    [1.0, 1.0, 1.0, 1.0],
+    [1.0, 1.0, 1.0, 1.0],
+    [1.0, 1.0, 1.0, 1.0]
+])
+print(np.any(N == 0))

@@ -10,7 +10,7 @@ from used.Plsa import Plsa
 
 if __name__ == "__main__":
 
-    plsazzz = [15]
+    plsazzz = [7, 10, 13, 15]
     for zzz in plsazzz:
         # plsaにおけるトピックの数
         plsa_z_size = zzz
@@ -19,10 +19,6 @@ if __name__ == "__main__":
         plsa_train_num = 100000
         # 作成するplsaの数
         estimate_num = 30
-
-        # alpha beta gannmaを取得
-        path = os.getcwd() + "/parameter_pd_with_various_beta.txt"
-        p = CreatePWithParameter(path)
 
         # 真のp(w, d)を取得
         path = os.getcwd() + "/true_pwd.txt"
@@ -37,20 +33,35 @@ if __name__ == "__main__":
 
         # tmp_klを初期化
         tmp_kl: float = 0
-        tmp_kl_path: str = os.getcwd() + "/data/tmp_kl/from_maked_data/z_" + str(plsa_z_size) + ".txt"
+        tmp_kl_path: str = os.getcwd() + "/data/tmp_kl/z_" + str(plsa_z_size) + ".txt"
         estimated_pwd_path: str = os.getcwd() + "/data/estimated_pwd/z_" + str(plsa_z_size) + ".txt"
+        make_p_wd: str = os.getcwd() + "/make_p_wd/" + str(plsa_z_size) + ".txt"
         for i in range(estimate_num):
-            print(str(i + 1) + "回目")
-            while True:
-                # トピック数をplsa_z_sizeとしてplsaを実行
-                p_wd = p.make_p(p.Pd.shape[0])
+            with open(make_p_wd) as f:
+                while True:
+                    line = f.readline().strip()
+                    if line == str(i+1) + "回目":
+                        line = f.readline().strip() # p(w, d)が入力される
+                        break
+                p_wd = []
+                while True:
+                    line = f.readline().strip()
+                    if line == "":
+                        break
+                    p_wd.append([float(x) for x in line.split()])
+                p_wd: np.ndarray = np.array(p_wd)
 
+            print(str(i + 1) + "回目")
             # p(w, d)が全体で1になるように
             p_wd = zentai(p_wd)
+
             plsa = Plsa(p_wd, plsa_z_size)
             # plsa_train_num回回す
             plsa.train(k=plsa_train_num)
+
+            # 分解したp からp(w, d)を生成
             estimated_p_wd = np.dot(np.dot(plsa.Px_z.T, np.diag(plsa.Pz)), plsa.Py_z)
+
             with open(estimated_pwd_path, mode="a") as f:
                 f.write(str(i + 1) + "回目\n")
                 f.write("make_p(w, d)\n")
@@ -103,9 +114,9 @@ if __name__ == "__main__":
         '''
         生成したtmp_pz tmp_pw tmp_pdを保存する
         '''
-        save_path_kl: str = os.getcwd() + "/data/kl/true_pwd/from_maked_data/z_" + str(plsa_z_size) + ".txt"
+        save_path_kl: str = os.getcwd() + "/data/kl/z_" + str(plsa_z_size) + ".txt"
         tmp_kl_str: str = str(tmp_kl)
         with open(save_path_kl, mode="x") as f:
-            f.write("\n")
             f.write(tmp_kl_str)
+            f.write("\n")
 
