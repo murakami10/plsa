@@ -10,7 +10,7 @@ from used.Plsa import Plsa
 
 if __name__ == "__main__":
 
-    plsazzz = [5]
+    plsazzz = [15]
     for zzz in plsazzz:
         # plsaにおけるトピックの数
         plsa_z_size = zzz
@@ -37,7 +37,7 @@ if __name__ == "__main__":
 
         # tmp_klを初期化
         tmp_kl: float = 0
-        tmp_kl_path: str = os.getcwd() + "/data/tmp_kl/z_" + str(plsa_z_size) + ".txt"
+        tmp_kl_path: str = os.getcwd() + "/data/tmp_kl/from_maked_data/z_" + str(plsa_z_size) + ".txt"
         estimated_pwd_path: str = os.getcwd() + "/data/estimated_pwd/z_" + str(plsa_z_size) + ".txt"
         for i in range(estimate_num):
             print(str(i + 1) + "回目")
@@ -51,6 +51,13 @@ if __name__ == "__main__":
             estimated_p_wd = np.dot(np.dot(plsa.Px_z.T, np.diag(plsa.Pz)), plsa.Py_z)
             with open(estimated_pwd_path, mode="a") as f:
                 f.write(str(i + 1) + "回目\n")
+                f.write("make_p(w, d)\n")
+                for j in p_wd:
+                    j_str: str = [str(jj) for jj in j]
+                    f.write(" ".join(j_str))
+                    f.write("\n")
+                f.write("\n\n")
+
                 f.write("p(z)\n")
                 plsa_pz_str = list(map(str, plsa.Pz))
                 f.write(" ".join(plsa_pz_str))
@@ -94,7 +101,7 @@ if __name__ == "__main__":
         '''
         生成したtmp_pz tmp_pw tmp_pdを保存する
         '''
-        save_path_kl: str = os.getcwd() + "/data/kl/true_pwd/z_" + str(plsa_z_size) + ".txt"
+        save_path_kl: str = os.getcwd() + "/data/kl/true_pwd/from_maked_data/z_" + str(plsa_z_size) + ".txt"
         tmp_kl_str: str = str(tmp_kl)
         with open(save_path_kl, mode="x") as f:
             f.write("\n")

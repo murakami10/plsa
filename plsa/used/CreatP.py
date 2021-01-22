@@ -28,14 +28,19 @@ class CreatP:
             tmp_ls.append(tmp_dir)
         self.phi = np.array(tmp_ls)
 
-    def make_p(self, d_size: int) -> np.ndarray:
+    def make_p(self, d_size: int, *, n_number: int = 0) -> np.ndarray:
+
+        # 生成する単語数に指定がなければ
+        if n_number == 0:
+            n_number = self.w_size * 2
+
         # d_siezはここで選ぶ？#####################################################
         p = [[0]*d_size for _ in range(self.w_size)]
         for d in range(d_size):
 
             di = np.random.choice(len(self.Pd), p=self.Pd) # Pdから文書を選択
             #print(di)
-            Ndi = np.random.poisson(self.w_size * 2)
+            Ndi = np.random.poisson(n_number)
             #print(Ndi)
             for _ in range(Ndi):
                 z = np.random.choice(self.z_size, p=self.Pz_d[di])
