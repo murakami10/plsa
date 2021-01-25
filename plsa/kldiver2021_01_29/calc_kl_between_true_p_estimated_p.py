@@ -10,7 +10,7 @@ from used.Plsa import Plsa
 
 if __name__ == "__main__":
 
-    plsazzz = [7, 10, 13, 15]
+    plsazzz = [15]
     for zzz in plsazzz:
         # plsaにおけるトピックの数
         plsa_z_size = zzz

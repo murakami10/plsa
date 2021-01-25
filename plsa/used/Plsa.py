@@ -31,7 +31,7 @@ class Plsa:
         print()
         '''
 
-    def train(self, k: int = 200):
+    def train(self, k: int = 200, t=1.0e-7):
         '''
         EMステップをk回繰り返す
         '''
@@ -41,6 +41,7 @@ class Plsa:
         for i in range(k):
             self.e_step()
             self.m_step()
+
 
     def e_step(self):
         # ここのNoneは新しい次元を追加する https://note.nkmk.me/python-numpy-newaxis/
@@ -84,3 +85,4 @@ class Plsa:
         self.Pz = self.Pz[index_sort]
         self.Px_z = self.Px_z[index_sort, :]
         self.Py_z = self.Py_z[index_sort, :]
+

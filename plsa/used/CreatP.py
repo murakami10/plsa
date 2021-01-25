@@ -1,5 +1,5 @@
 import numpy as np
-from typing import List
+from typing import List, Tuple
 import sys, os
 sys.path.append('../')
 from used.Plsa import Plsa
@@ -48,11 +48,33 @@ class CreatP:
                 p[w][d] += 1
         return np.array(p)
 
+    def make_p_by_different_ways(self, d_size: int, *, n_number: int = 0) -> (np.ndarray, List[int]):
+        # 生成する単語数に指定がなければ
+        if n_number == 0:
+            n_number = self.w_size * 2
+
+        # d_siezはここで選ぶ？#####################################################
+        p = [[0]*d_size for _ in range(self.w_size)]
+        di_list: List[int] = []
+        for d in range(d_size):
+            di_list.append(np.random.choice(len(self.Pd), p=self.Pd)) # Pdから文書を選択
+        di_list.sort()
+        #print(di)
+        for d in range(len(di_list)):
+            Ndi = np.random.poisson(n_number)
+            #print(Ndi)
+            for _ in range(Ndi):
+                z = np.random.choice(self.z_size, p=self.Pz_d[di_list[d]])
+                w = np.random.choice(self.w_size, p=self.phi[z])
+                p[w][d] += 1
+        return np.array(p), di_list
+
+
 if __name__ == '__main__':
     #alpha beta ganmaは一桁
     alpha = [1, 20, 1, 20]  # len(alpha)がトピックの数
     beta = [2, 1, 2, 1, 2, 1, 1, 2]  # len(beta)が語彙の数
-    ganma = [1, 20, 1, 20, 1]  # len(ganma)が文書の集合の個数
+    ganma = [1, 2, 1, 10, 1]  # len(ganma)が文書の集合の個数
     # print(len(beta))
     # print(len(ganma))
 
@@ -61,8 +83,10 @@ if __name__ == '__main__':
     plsa_z = 4
 
     c = CreatP(alpha, beta, ganma)
-    p = c.make_p(d)
+    p, label = c.make_p_by_different_ways(d)
+    print(label)
 
+    """
     p = zentai(p)
     # print(p)
     plsa = Plsa(p, plsa_z)
@@ -77,6 +101,7 @@ if __name__ == '__main__':
     #print()
 
     #print(kl_diver(p, after_p))
+    """
 
     '''
     print('Pd')

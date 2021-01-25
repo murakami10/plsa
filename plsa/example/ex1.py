@@ -4,7 +4,7 @@ import sys
 sys.path.append('../')
 
 from used.Plsa import Plsa
-from used.pre_process import kl_diver
+from used.pre_process import kl_diver, kl_diver_with_label
 '''
 
 N = np.array([
@@ -49,7 +49,7 @@ print('P(z|y)')
 Pz_y = plsa.Py_z.T * plsa.Pz[None, :]
 print(Pz_y / np.sum(Pz_y, axis=1)[:, None])
 '''
-'''
+
 N = np.array([
     [1.0, 1.0, 1.0, 1.0],
     [1.0, 1.0, 1.0, 1.0],
@@ -60,16 +60,17 @@ N = np.array([
 N /= np.sum(N)
 
 N1 = np.array([
-    [1.0, 1.0, 1.0, 1.0],
-    [1.0, 0.5, 1.0, 1.0],
-    [1.0, 1.0, 1.0, 1.0],
-    [1.0, 1.0, 1.0, 1.0],
-    [1.0, 1.0, 1.0, 1.0]
+    [0.0, 0.0, 0.0, 0.0],
+    [0.0, 0.5, 0.0, 0.0],
+    [0.0, 0.0, 1.0, 0.0],
+    [0.0, 0.0, 0.0, 1.0],
+    [1.0, 0.0, 0.0, 0.0]
 ])
+label = [0, 0, 0, 0]
 
 N1 /= np.sum(N1)
 
-print(kl_diver(N, N1))
+print(kl_diver_with_label(N, N1, label))
 '''
 N = np.array([
     [1.0, 0.0, 1.0, 1.0],
@@ -79,3 +80,4 @@ N = np.array([
     [1.0, 1.0, 1.0, 1.0]
 ])
 print(np.any(N == 0))
+'''
