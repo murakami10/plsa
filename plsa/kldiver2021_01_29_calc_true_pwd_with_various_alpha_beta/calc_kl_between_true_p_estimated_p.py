@@ -10,7 +10,7 @@ from used.Plsa import Plsa
 
 if __name__ == "__main__":
 
-    plsazzz = [5]
+    plsazzz = [7, 10, 13, 15]
     for zzz in plsazzz:
         # plsaにおけるトピックの数
         plsa_z_size = zzz
@@ -117,7 +117,7 @@ if __name__ == "__main__":
         '''
         save_path_kl: str = os.getcwd() + "/data/kl/z_" + str(plsa_z_size) + ".txt"
         tmp_kl_str: str = str(tmp_kl)
-        with open(save_path_kl, mode="x") as f:
+        with open(save_path_kl, mode="a") as f:
             f.write(tmp_kl_str)
             f.write("\n")
 

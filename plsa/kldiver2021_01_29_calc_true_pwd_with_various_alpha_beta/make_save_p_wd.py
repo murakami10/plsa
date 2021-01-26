@@ -8,7 +8,7 @@ from used.CreatPWithParameter import CreatePWithParameter
 
 if __name__ == "__main__":
 
-    plsazzz = [7, 10, 13, 15]
+    plsazzz = [8, 9, 11, 12]
     for zzz in plsazzz:
         # plsaにおけるトピックの数
         plsa_z_size = zzz
@@ -30,7 +30,6 @@ if __name__ == "__main__":
                 if not np.any(p_wd == 0):
                     break
 
-            # p(w, d)が全体で1になるように
             with open(estimated_pwd_path, mode="a") as f:
                 f.write(str(i + 1) + "回目\n")
                 f.write("make_p(w, d)\n")
