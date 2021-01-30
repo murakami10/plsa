@@ -59,7 +59,7 @@ class CreatP:
         for d in range(d_size):
             di_list.append(np.random.choice(len(self.Pd), p=self.Pd)) # Pdから文書を選択
         di_list.sort()
-        #print(di)
+
         for d in range(len(di_list)):
             Ndi = np.random.poisson(n_number)
             #print(Ndi)
@@ -68,6 +68,21 @@ class CreatP:
                 w = np.random.choice(self.w_size, p=self.phi[z])
                 p[w][d] += 1
         return np.array(p), di_list
+
+    def make_w(self, d: int, *, n_number: int = 0) -> List[int]:
+
+        # 生成する単語数に指定がなければ
+        n_number = self.w_size * n_number
+
+        Ndi = np.random.poisson(n_number)
+
+        n: List[int] = [0] * self.w_size
+
+        for _ in range(Ndi):
+            z = np.random.choice(self.z_size, p=self.Pz_d[d])
+            w = np.random.choice(self.w_size, p=self.phi[z])
+            n[w] += 1
+        return n
 
 
 if __name__ == '__main__':

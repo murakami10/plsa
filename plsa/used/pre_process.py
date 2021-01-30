@@ -11,6 +11,7 @@ def kl_diver(A: np.ndarray, B: np.ndarray) -> float:
     ab = ab.sum()
 
     return ab
+
 def kl_diver_with_label(A: np.ndarray, B: np.ndarray, lable: List[int]) -> float:
     C: np.ndarray = np.zeros_like(B)
     for index, l in enumerate(lable):
@@ -19,10 +20,6 @@ def kl_diver_with_label(A: np.ndarray, B: np.ndarray, lable: List[int]) -> float
     ab = np.ma.log(ab)
     ab = ab.sum()
     return ab
-
-
-
-
 
 
 def euclid(A: np.ndarray, B: np.ndarray) -> float:
