@@ -8,7 +8,7 @@ from used.CreatPWithParameter import CreatePWithParameter
 
 if __name__ == "__main__":
 
-    plsazzz = [8, 9, 11, 12]
+    plsazzz = [14,16]
     for zzz in plsazzz:
         # plsaにおけるトピックの数
         plsa_z_size = zzz

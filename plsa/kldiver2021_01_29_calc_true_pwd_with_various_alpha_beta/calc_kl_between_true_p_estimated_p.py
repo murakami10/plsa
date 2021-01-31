@@ -10,13 +10,13 @@ from used.Plsa import Plsa
 
 if __name__ == "__main__":
 
-    plsazzz = [8,9,11,12]
+    plsazzz = [14,16]
     for zzz in plsazzz:
         # plsaにおけるトピックの数
         plsa_z_size = zzz
         print(plsa_z_size)
         # plsaにおけるemステップの回数
-        plsa_train_num = 150000
+        plsa_train_num = 100000
         # 作成するplsaの数
         estimate_num = 30
 

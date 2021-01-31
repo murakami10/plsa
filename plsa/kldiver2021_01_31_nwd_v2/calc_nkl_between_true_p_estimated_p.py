@@ -78,7 +78,7 @@ def nkl_diver_with_label(A: np.ndarray, B: np.ndarray, lable: List[int], create_
 
 if __name__ == "__main__":
 
-    plsazzz = [5,7,8,9,10,11,12,13,15]
+    plsazzz = [14,16]
     for zzz in plsazzz:
         # plsaにおけるトピックの数
         plsa_z_size = zzz
