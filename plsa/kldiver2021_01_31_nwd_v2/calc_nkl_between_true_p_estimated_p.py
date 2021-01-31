@@ -6,15 +6,26 @@ from typing import List
 
 from used.CreatPWithParameter import CreatePWithParameter
 
-def nkl_diver_with_label(A: np.ndarray, B: np.ndarray, lable: List[int], create_p: CreatePWithParameter, esnum: int, plsa_size: int) -> float:
-    tmp_nab = 0
+def nkl_diver_with_label(A: np.ndarray, B: np.ndarray, lable: List[int], create_p: CreatePWithParameter, esnum: int, plsa_size: int) -> (float, List[float]):
+    tmp_AnCn = 0
     cycle = 10
+    path = os.getcwd() + "/data/tmp_nkl_matrix/" + str(plsa_size) + ".txt"
+    with open(path, mode="a") as f:
+        f.write(str(esnum + 1) + "回目\n")
+        f.write("\n\n")
+
+    cycle_list:List[float] = []
+
+    C: np.ndarray = np.zeros_like(B)
+    for index, l in enumerate(lable):
+        C[:, l] += B[:, index]
+
+    A_tmp = np.ma.log(A)
+    C_tmp = np.ma.log(C)
+    C_tmp = C_tmp.filled(fill_value=0.0) # マスクされている部分をゼロに変換
+
     for i in range(cycle):
         print("cycle: " + str(i))
-        C: np.ndarray = np.zeros_like(B)
-        for index, l in enumerate(lable):
-            C[:, l] += B[:, index]
-
 
         n: np.ndarray = np.zeros_like(B)
         label_set = set(label)
@@ -26,32 +37,43 @@ def nkl_diver_with_label(A: np.ndarray, B: np.ndarray, lable: List[int], create_
                     break
             n[:, l] += n_wd.T
 
-        ab = np.divide(A, C, out=np.zeros_like(A), where=(C != 0))
-        ab = np.ma.log(ab)
-        nab = n * ab
-        if i == 0:
-            path = os.getcwd() + "/data/tmp_nkl_matrix/" + str(plsa_size) + ".txt"
-            with open(path, mode="a") as f:
-                f.write(str(esnum + 1) + "回目\n")
+        An: np.ndarray = n * A_tmp
+        Cn: np.ndarray = n * C_tmp
 
-                f.write("log p0/p\n")
-                for a in ab:
-                    a_str = list(map(str, a))
-                    f.write(" ".join(a_str))
-                    f.write("\n")
-                f.write("\n\n")
 
-                f.write("n(w,d)log p0/p\n")
-                for a in nab:
-                    a_str = list(map(str, a))
-                    f.write(" ".join(a_str))
-                    f.write("\n")
-                f.write("\n\n")
+        with open(path, mode="a") as f:
+            f.write(str(i + 1) + "cycle\n")
 
-        nab = nab.sum()
-        tmp_nab += nab
-    tmp_nab = tmp_nab/cycle
-    return tmp_nab
+            f.write("n\n")
+            for a in n:
+                a_str = list(map(str, a))
+                f.write(" ".join(a_str))
+                f.write("\n")
+            f.write("\n\n")
+
+            f.write("An\n")
+            for a in An:
+                a_str = list(map(str, a))
+                f.write(" ".join(a_str))
+                f.write("\n")
+            f.write("\n\n")
+
+            f.write("Cn\n")
+            for a in Cn:
+                a_str = list(map(str, a))
+                f.write(" ".join(a_str))
+                f.write("\n")
+            f.write("\n\n")
+
+        An = An.sum()
+        Cn = Cn.sum()
+
+        AnCn_sum = An / Cn
+
+        cycle_list.append(AnCn_sum)
+        tmp_AnCn += AnCn_sum
+    tmp_nab = tmp_AnCn/cycle
+    return tmp_nab, cycle_list
 
 
 if __name__ == "__main__":
@@ -79,6 +101,7 @@ if __name__ == "__main__":
         tmp_nkl_path: str = os.getcwd() + "/data/tmp_nkl/z_" + str(plsa_z_size) + ".txt"
         estimated_pwd_path: str = os.getcwd() + "/data/estimated_pwd/z_" + str(plsa_z_size) + ".txt"
         make_p_wd: str = os.getcwd() + "/make_p_wd/" + str(plsa_z_size) + ".txt"
+        each_result = []
         for i in range(estimate_num):
             # lableを取得
             with open(make_p_wd) as f:
@@ -114,7 +137,10 @@ if __name__ == "__main__":
             print(str(i + 1) + "回目")
 
             # 真のp(w, d)と計算したp(w, d)を求める
-            nkl = nkl_diver_with_label(true_pwd, estimated_p_wd, label, create_p, i, plsa_z_size)
+            nkl, cycle_list = nkl_diver_with_label(true_pwd, estimated_p_wd, label, create_p, i, plsa_z_size)
+
+            each_result.append(cycle_list)
+
             with open(tmp_nkl_path, mode="a") as f:
                 f.write(str(i + 1) + "回目")
                 f.write(str(nkl))
@@ -125,9 +151,15 @@ if __name__ == "__main__":
 
         tmp_nkl /= estimate_num
 
-        '''
-        生成したtmp_pz tmp_pw tmp_pdを保存する
-        '''
+        with open(tmp_nkl_path, mode="a") as f:
+            f.write("\n\n")
+            f.write("each_result\n")
+            for er in each_result:
+                er_str = list(map(str, er))
+                f.write(" ".join(er_str))
+                f.write("\n")
+            f.write("\n\n")
+
         save_path_nkl: str = os.getcwd() + "/data/nkl/z_" + str(plsa_z_size) + ".txt"
         tmp_nkl_str: str = str(tmp_nkl)
         with open(save_path_nkl, mode="a") as f:
